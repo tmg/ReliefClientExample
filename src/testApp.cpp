@@ -23,11 +23,8 @@ void testApp::update() {
         ofxOscMessage m;
         receiver.getNextMessage(&m);        
         // check for mouse moved message
-        if(m.getAddress() == "/relief/connect/reply"){           
-            int port = m.getArgAsInt32(0);
-            sender.setup(HOST,port);
-            currentPort = port;
-            printf("%d\n",port);
+        if(m.getAddress() == "/relief/connect/reply"){
+            printf("Connected\n");
         }
     }
     if (connected && ofGetElapsedTimef() > lastPing + 2.f) {
@@ -78,7 +75,7 @@ void testApp::keyPressed(int key){
     
     if(key == 'b') {
         ofxOscMessage m;
-        m.setAddress("/relief/set");
+        m.setAddress("/relief/load");
         //send the square
         for (int x = 0; x < 12; x++) { 
             for (int y = 0; y < 12; y++) {
@@ -94,7 +91,7 @@ void testApp::keyPressed(int key){
     
     if(key == 'r') {
         ofxOscMessage m;
-        m.setAddress("/relief/set");
+        m.setAddress("/relief/load");
         //send the square
         for (int x = 0; x < 12; x++) { 
             for (int y = 0; y < 12; y++) {
