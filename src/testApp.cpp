@@ -8,7 +8,7 @@ void testApp::setup(){
 	// open an outgoing connection to HOST:PORT
     currentPort = PORT;
 	sender.setup(HOST, currentPort);
-    receiver.setup(PORT+100);
+    receiver.setup(LISTEN_PORT);
     connected = false;    
 }
 
@@ -27,9 +27,10 @@ void testApp::update() {
             printf("Connected\n");
         }
     }
-    if (connected && ofGetElapsedTimef() > lastPing + 2.f) {
+    if (ofGetElapsedTimef() > lastPing + 2.f) {
         ofxOscMessage m;
-        m.setAddress("/relief/ping");
+        m.setAddress("/relief/heartbeat");
+        m.addIntArg(LISTEN_PORT);
         sender.sendMessage(m);
     }
 }
@@ -40,21 +41,21 @@ void testApp::draw(){
 	string buf;
 	buf = "Sending to " + string(HOST)+  ":" + ofToString(currentPort);
 	ofDrawBitmapString(buf, 10, 20);
-	ofDrawBitmapString("press 'c' to connect, and 'd' to disconnect", 10, 50);
-	ofDrawBitmapString("use 0 - 9 to set the height of one pin", 10, 65);
-	ofDrawBitmapString("press 'b' to send a box to the relief and 'r' to reset the relief", 10, 80);
+	//ofDrawBitmapString("press 'c' to connect, and 'd' to disconnect", 10, 50);
+	ofDrawBitmapString("use 0 - 9 to set the height of one pin", 10, 50);
+	ofDrawBitmapString("press 'b' to send a box to the relief and 'r' to reset the relief", 10, 65);
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){    
-    if(key == 'c'){
+    /*if(key == 'c'){
 		ofxOscMessage m;
         m.setAddress("/relief/connect");
-        m.addIntArg(PORT+100);
+        m.addIntArg(PORT+50);
 		sender.sendMessage(m);
         lastPing = ofGetElapsedTimef();
         connected = true;
-	}
+	}*/
     
     if(key == 'd'){
 		ofxOscMessage m;

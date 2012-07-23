@@ -5,6 +5,7 @@
 
 #define HOST "localhost"
 #define PORT 78746
+#define LISTEN_PORT 88331
 
 //--------------------------------------------------------
 class testApp : public ofBaseApp {
