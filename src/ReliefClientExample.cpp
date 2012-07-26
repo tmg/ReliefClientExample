@@ -10,7 +10,7 @@ void ReliefClientExample::update() {
     reliefUpdate();
 }
 
-void ReliefClientExample::messageReceivedFromRelief(ofxOscMessage m) {
+void ReliefClientExample::reliefMessageReceived(ofxOscMessage m) {
     if(m.getAddress() == "/relief/update") {
         printf("Relief updated\n");
     }    
@@ -34,7 +34,7 @@ void ReliefClientExample::keyPressed(int key){
         m.addIntArg(6);
         m.addIntArg(6);
         m.addIntArg((key-'0')*10);
-        sendMessageToRelief(m);
+        reliefMessageSend(m);
     }
     
     if(key == 'b') {
@@ -50,7 +50,7 @@ void ReliefClientExample::keyPressed(int key){
                 }
             }
         }
-        sendMessageToRelief(m);
+        reliefMessageSend(m);
     }
     
     if(key == 'r') {
@@ -62,7 +62,7 @@ void ReliefClientExample::keyPressed(int key){
                 m.addIntArg(0);
             }
         }
-        sendMessageToRelief(m);
+        reliefMessageSend(m);
     }
 }
 

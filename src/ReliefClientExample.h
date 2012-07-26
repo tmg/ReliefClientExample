@@ -15,7 +15,7 @@ class ReliefClientExample : public ReliefClientBase {
 		void draw();
         void update();
         void keyPressed(int key);
-        virtual void messageReceivedFromRelief(ofxOscMessage m);
+        virtual void reliefMessageReceived(ofxOscMessage m);
 		ofTrueTypeFont font;
 };
 

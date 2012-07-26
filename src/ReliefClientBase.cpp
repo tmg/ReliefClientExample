@@ -9,7 +9,7 @@ void ReliefClientBase::reliefSetup(string host, int port) {
 ReliefClientBase::~ReliefClientBase() {
     ofxOscMessage m;
     m.setAddress("/relief/disconnect");
-    sendMessageToRelief(m);
+    reliefMessageSend(m);
 }
 
 ReliefClientBase::ReliefClientBase() {
@@ -21,20 +21,20 @@ void ReliefClientBase::reliefUpdate() {
     while (reliefReceiver.hasWaitingMessages()) {
         ofxOscMessage m;
         reliefReceiver.getNextMessage(&m);
-        messageReceivedFromRelief(m);
+        reliefMessageReceived(m);
     }
     if (ofGetElapsedTimef() > lastHearbeat + 2.f) {
         ofxOscMessage m;
         m.setAddress("/relief/heartbeat");
-        sendMessageToRelief(m);
+        reliefMessageSend(m);
     }
 }
 
-void ReliefClientBase::messageReceivedFromRelief(ofxOscMessage m) {
-    cout << "received an OSC message, but messageReceived is not implemented.";
+void ReliefClientBase::reliefMessageReceived(ofxOscMessage m) {
+    cout << "received an OSC message, but reliefMessageReceived is not implemented.";
 }
 
 //--------------------------------------------------------------
-void ReliefClientBase::sendMessageToRelief(ofxOscMessage m) {
+void ReliefClientBase::reliefMessageSend(ofxOscMessage m) {
     reliefSender.sendMessage(m);
 }

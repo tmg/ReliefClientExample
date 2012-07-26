@@ -15,8 +15,8 @@ class ReliefClientBase : public ofBaseApp {
 		void reliefSetup(string host, int port);
 		void reliefUpdate();
     
-        virtual void messageReceivedFromRelief(ofxOscMessage m);
-        void sendMessageToRelief(ofxOscMessage m);
+        virtual void reliefMessageReceived(ofxOscMessage m);
+        void reliefMessageSend(ofxOscMessage m);
     
 		ofxOscSender reliefSender;
         ofxOscReceiver reliefReceiver;
