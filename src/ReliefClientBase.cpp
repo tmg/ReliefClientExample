@@ -1,43 +1,40 @@
 #include "ReliefClientBase.h"
 
-
 //--------------------------------------------------------------
-void ReliefClientBase::baseSetup(string host, int target_port, int listen_port){
-	sender.setup(host, target_port);
-    receiver.setup(listen_port);
+void ReliefClientBase::reliefSetup(string host, int port) {
+	reliefSender.setup(host, port);
+    reliefReceiver.setup(port);
 }
 
 ReliefClientBase::~ReliefClientBase() {
     ofxOscMessage m;
     m.setAddress("/relief/disconnect");
-   sendToRelief(m);
+    sendMessageToRelief(m);
 }
 
 ReliefClientBase::ReliefClientBase() {
-    baseSetup(HOST,PORT,LISTEN_PORT);
+    reliefSetup(RELIEF_HOST, RELIEF_PORT);
 }
 
 //--------------------------------------------------------------
-void ReliefClientBase::baseUpdate() {
-    while (receiver.hasWaitingMessages()) {
+void ReliefClientBase::reliefUpdate() {
+    while (reliefReceiver.hasWaitingMessages()) {
         ofxOscMessage m;
-        receiver.getNextMessage(&m);
-        messageReceived(m);
+        reliefReceiver.getNextMessage(&m);
+        messageReceivedFromRelief(m);
     }
-    if (ofGetElapsedTimef() > lastPing + 2.f) {
+    if (ofGetElapsedTimef() > lastHearbeat + 2.f) {
         ofxOscMessage m;
         m.setAddress("/relief/heartbeat");
-        m.addIntArg(LISTEN_PORT);
-        sendToRelief(m);
+        sendMessageToRelief(m);
     }
 }
 
-void ReliefClientBase::messageReceived(ofxOscMessage m) {
-    printf("messageReceived not defined\n");
+void ReliefClientBase::messageReceivedFromRelief(ofxOscMessage m) {
+    cout << "received an OSC message, but messageReceived is not implemented.";
 }
 
 //--------------------------------------------------------------
-void ReliefClientBase::sendToRelief(ofxOscMessage m) {
-    sender.sendMessage(m);
+void ReliefClientBase::sendMessageToRelief(ofxOscMessage m) {
+    reliefSender.sendMessage(m);
 }
-

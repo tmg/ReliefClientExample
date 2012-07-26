@@ -7,10 +7,10 @@ void ReliefClientExample::setup() {
 }
 
 void ReliefClientExample::update() {
-    baseUpdate();
+    reliefUpdate();
 }
 
-void ReliefClientExample::messageReceived(ofxOscMessage m) {
+void ReliefClientExample::messageReceivedFromRelief(ofxOscMessage m) {
     if(m.getAddress() == "/relief/update") {
         printf("Relief updated\n");
     }    
@@ -20,7 +20,7 @@ void ReliefClientExample::messageReceived(ofxOscMessage m) {
 void ReliefClientExample::draw(){
 	// display instructions
 	string buf;
-	buf = "Sending to " + string(HOST)+  ":" + ofToString(PORT);
+	buf = "Sending to " + string(RELIEF_HOST)+  ":" + ofToString(RELIEF_PORT);
 	ofDrawBitmapString(buf, 10, 20);
 	ofDrawBitmapString("use 0 - 9 to set the height of one pin", 10, 50);
 	ofDrawBitmapString("press 'b' to send a box to the relief and 'r' to reset the relief", 10, 65);
@@ -34,7 +34,7 @@ void ReliefClientExample::keyPressed(int key){
         m.addIntArg(6);
         m.addIntArg(6);
         m.addIntArg((key-'0')*10);
-        sendToRelief(m);
+        sendMessageToRelief(m);
     }
     
     if(key == 'b') {
@@ -50,7 +50,7 @@ void ReliefClientExample::keyPressed(int key){
                 }
             }
         }
-        sendToRelief(m);
+        sendMessageToRelief(m);
     }
     
     if(key == 'r') {
@@ -62,7 +62,7 @@ void ReliefClientExample::keyPressed(int key){
                 m.addIntArg(0);
             }
         }
-        sendToRelief(m);
+        sendMessageToRelief(m);
     }
 }
 
